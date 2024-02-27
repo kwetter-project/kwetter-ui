@@ -9,8 +9,12 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "pinia": "^2.1.6",
+    "sass": "^1.64.1",
+    "sass-loader": "^13.3.2",
     "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue-sweetalert2": "^5.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -34,7 +38,9 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {
+      "vue/multi-word-component-names": "off"
+    }
   },
   "browserslist": [
     "> 1%",

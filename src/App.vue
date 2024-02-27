@@ -1,30 +1,90 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="app">
+    <Modal />
+    <!-- Sidebar -->
+    <Sidebar v-if="!isMobileView && $route.path !== '/login'" />
+    <Bottombar v-if="isMobileView && $route.path !== '/login'" />
+    <!-- Content -->
+    <router-view />
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script setup>
+import Sidebar from "./components/SideBar.vue";
+import Bottombar from "./components/BottomBar.vue";
+import Modal from "@/components/Modal.vue";
+import { ref, onMounted, onUnmounted } from "vue";
+
+const isMobileView = ref(window.innerWidth <= 768);
+
+const handleResize = () => {
+  isMobileView.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", handleResize);
+});
+</script>
+
+<style lang="scss">
+:root {
+  --primary: #1d9bf0;
+  --primary-alt: #22c55e;
+  --secondary: #71767b;
+  --grey-alt-3: #16181c;
+  --grey-alt-2: #333639;
+  --grey-alt: #202327;
+  --grey: #2f3336;
+  --dark: black;
+  --dark-alt: #181818;
+  --light: #f1f5f9;
+  --sidebar-width: 300px;
+  --small: 12px;
+  --link-color: #1c84cb;
 }
 
-nav {
-  padding: 30px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+a {
+  text-decoration: none;
+  color: var(--link-color);
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+body {
+  background: var(--dark);
+  color: var(--light);
+}
+
+button {
+  cursor: pointer;
+  appearance: none;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+.app {
+  display: flex;
+
+  main {
+    flex: 1 1 0;
+    padding: 2rem;
+
+    @media (max-width: 1024px) {
+      padding-left: 6rem;
+    }
+  }
+}
+.view-wrapper {
+  padding: 1.5em;
 }
 </style>
